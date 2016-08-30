@@ -1,4 +1,5 @@
 package com.example.android.calculator;
+import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -284,17 +285,31 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener minus = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(!tvOperation.getText().toString().substring(tvOperation.getText().toString().length()-1, tvOperation.getText().toString().length()).equals("-")) {
-                if(isLastEqual)
-                    operation = tvResult.getText().toString();
-                else
-                    operation = tvOperation.getText().toString();
+            if(!tvOperation.getText().toString().equals("")) {
+                if (!tvOperation.getText().toString().substring(tvOperation.getText().toString().length() - 1, tvOperation.getText().toString().length()).equals("-")) {
+                    if (isLastEqual) {
+                        operation = tvResult.getText().toString();
+                        operation = operation + "-";
+                        tvOperation.setText(operation);
+                        isLastEqual = false;
+                    }
+                    else {
+                        operation = tvOperation.getText().toString();
+                        operation = operation + "-";
+                        tvOperation.setText(operation);
+                        isLastEqual = false;
+                    }
 
-                    cutLast();
-                    operation = operation + "-";
-                    tvOperation.setText(operation);
-                    isLastEqual=false;
+                }}
+            else {
+                operation=tvOperation.getText().toString();
+                operation = operation + "-";
+                tvOperation.setText(operation);
+                isLastEqual = false;
             }
+
+
+
 
 
         }
