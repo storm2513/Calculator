@@ -2,11 +2,12 @@ package com.example.android.calculator;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     Button bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, bt9, bt0, btMult, btMin, btC, btDiv, btSqrt, btPM, btDel, btPlus, btDot, btEq;
     TextView tvOperation, tvResult;
