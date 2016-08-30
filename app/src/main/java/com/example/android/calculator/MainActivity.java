@@ -1,4 +1,5 @@
 package com.example.android.calculator;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         bt1 = (Button) findViewById(R.id.bt1);
         bt2 = (Button) findViewById(R.id.bt2);
@@ -395,9 +397,6 @@ public class MainActivity extends AppCompatActivity {
         if (isLastOperator(operation))
             operation = operation.substring(0, operation.length() - 1);
     }
-
-
-
 
 }
 
