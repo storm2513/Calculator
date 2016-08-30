@@ -1,6 +1,4 @@
 package com.example.android.calculator;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,6 +11,8 @@ public class MainActivity extends AppCompatActivity {
     TextView tvOperation, tvResult;
     static Double result;
     static String operation = "";
+    static boolean isLastEqual = false;
+
 
     Expressions res = new Expressions();
 
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 if(operation.length()!=0)
                 operation = operation.substring(0, operation.length() - 1);
                 tvOperation.setText(operation);
-
+                isLastEqual=false;
             }
         });
         btDel.setOnLongClickListener(new View.OnLongClickListener() {
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onLongClick(View v) {
                 operation = "";
                 tvOperation.setText("");
+                isLastEqual=false;
                 return true;
             }
         });
@@ -81,45 +82,44 @@ public class MainActivity extends AppCompatActivity {
         btPM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!tvResult.getText().toString().equals("")){
-                operation=tvResult.getText().toString();
-                if(!operation.substring(0,1).equalsIgnoreCase("-")) {
-                    operation = "-" + operation;
-                    tvOperation.setText(operation);
-                    tvResult.setText(operation);
-                }
-                else
-                {
-                    operation=operation.substring(1,operation.length());
-                    tvOperation.setText(operation);
-                    tvResult.setText(operation);
-                }}
-                else{
-                    operation=tvOperation.getText().toString();
-                    if(isLastOperator(operation))
-                        operation=operation.substring(0, operation.length()-1);
-                    try {
-                        result = res.Parse(operation);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                if (!tvOperation.getText().toString().equals("")) {
+                    if (!tvResult.getText().toString().equals("")) {
+                        operation = tvResult.getText().toString();
+                        if (!operation.substring(0, 1).equalsIgnoreCase("-")) {
+                            operation = "-" + operation;
+                            tvOperation.setText(operation);
+                            tvResult.setText(operation);
+                        } else {
+                            operation = operation.substring(1, operation.length());
+                            tvOperation.setText(operation);
+                            tvResult.setText(operation);
+                        }
+                    } else {
+                        operation = tvOperation.getText().toString();
+                        if (isLastOperator(operation))
+                            operation = operation.substring(0, operation.length() - 1);
+                        try {
+                            result = res.Parse(operation);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        operation = result.toString();
+                        if (operation.substring(operation.length() - 2, operation.length()).equals(".0"))
+                            operation = operation.substring(0, operation.length() - 2);
+                        if (!operation.substring(0, 1).equalsIgnoreCase("-")) {
+                            operation = "-" + operation;
+                            tvOperation.setText(operation);
+                            tvResult.setText(operation);
+                        } else {
+                            operation = operation.substring(1, operation.length());
+                            tvOperation.setText(operation);
+                            tvResult.setText(operation);
+                        }
                     }
 
-                    operation=result.toString();
-                    if(operation.substring(operation.length()-2, operation.length()).equals(".0"))
-                        operation=operation.substring(0,operation.length()-2);
-                    if(!operation.substring(0,1).equalsIgnoreCase("-")) {
-                        operation = "-" + operation;
-                        tvOperation.setText(operation);
-                        tvResult.setText(operation);
-                    }
-                    else
-                    {
-                        operation=operation.substring(1,operation.length());
-                        tvOperation.setText(operation);
-                        tvResult.setText(operation);
-                    }}
-
                 }
+            }
 
 
         });
@@ -148,49 +148,79 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.bt1:
+                    if(isLastEqual)
+                        operation="";
                     operation += "1";
                     tvOperation.setText(operation);
+                    isLastEqual=false;
                     break;
                 case R.id.bt2:
+                    if(isLastEqual)
+                        operation="";
                     operation += "2";
                     tvOperation.setText(operation);
+                    isLastEqual=false;
                     break;
                 case R.id.bt3:
+                    if(isLastEqual)
+                        operation="";
                     operation += "3";
                     tvOperation.setText(operation);
+                    isLastEqual=false;
                     break;
                 case R.id.bt4:
+                    if(isLastEqual)
+                        operation="";
                     operation += "4";
                     tvOperation.setText(operation);
+                    isLastEqual=false;
                     break;
                 case R.id.bt5:
                     operation += "5";
                     tvOperation.setText(operation);
+                    isLastEqual=false;
                     break;
                 case R.id.bt6:
+                    if(isLastEqual)
+                        operation="";
                     operation += "6";
                     tvOperation.setText(operation);
+                    isLastEqual=false;
                     break;
                 case R.id.bt7:
+                    if(isLastEqual)
+                        operation="";
                     operation +="7";
                     tvOperation.setText(operation);
+                    isLastEqual=false;
                     break;
                 case R.id.bt8:
+                    if(isLastEqual)
+                        operation="";
                     operation += "8";
                     tvOperation.setText(operation);
+                    isLastEqual=false;
                     break;
                 case R.id.bt9:
+                    if(isLastEqual)
+                        operation="";
                     operation += "9";
                     tvOperation.setText(operation);
+                    isLastEqual=false;
                     break;
                 case R.id.bt0:
+                    if(isLastEqual)
+                        operation="";
                     if (tvOperation.getText() == "")
                         break;
                     operation += "0";
                     tvOperation.setText(operation);
+                    isLastEqual=false;
                     break;
 
                 case R.id.btDot:
+                    if(isLastEqual)
+                        operation="";
                     if(tvOperation.getText().toString().equals("")){
                         tvOperation.setText("0.");
                         operation=tvOperation.getText().toString();
@@ -199,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                         operation += ".";
                         tvOperation.setText(operation);
                     }
+                    isLastEqual=false;
                     break;
 
             }
@@ -209,21 +240,23 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener equal = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            operation=tvOperation.getText().toString();
-            if(isLastOperator(operation))
-                operation=operation.substring(0, operation.length()-1);
-            try {
-                result = res.Parse(operation);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if(!tvOperation.getText().toString().equals("")) {
+                operation = tvOperation.getText().toString();
+                cutLast();
+                try {
+                    result = res.Parse(operation);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                operation = result.toString();
+
+                if (operation.substring(operation.length() - 2, operation.length()).equals(".0"))
+                    operation = operation.substring(0, operation.length() - 2);
+
+                tvResult.setText(operation);
+                isLastEqual=true;
             }
-            
-            operation=result.toString();
-
-            if(operation.substring(operation.length()-2, operation.length()).equals(".0"))
-                operation=operation.substring(0,operation.length()-2);
-
-            tvResult.setText(operation);
 
 
         }
@@ -231,9 +264,17 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener plus = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            operation=tvOperation.getText().toString();
-            operation=operation + "+";
-            tvOperation.setText(operation);
+            if(!tvOperation.getText().toString().equals("")&&
+                    !tvOperation.getText().toString().substring(tvOperation.getText().toString().length()-1, tvOperation.getText().toString().length()).equals("+")) {
+                if(isLastEqual)
+                    operation = tvResult.getText().toString();
+                else
+                    operation = tvOperation.getText().toString();
+                cutLast();
+                operation = operation + "+";
+                tvOperation.setText(operation);
+                isLastEqual=false;
+            }
 
 
         }
@@ -241,9 +282,17 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener minus = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            operation=tvOperation.getText().toString();
-            operation=operation + "-";
-            tvOperation.setText(operation);
+            if(!tvOperation.getText().toString().substring(tvOperation.getText().toString().length()-1, tvOperation.getText().toString().length()).equals("-")) {
+                if(isLastEqual)
+                    operation = tvResult.getText().toString();
+                else
+                    operation = tvOperation.getText().toString();
+
+                    cutLast();
+                    operation = operation + "-";
+                    tvOperation.setText(operation);
+                    isLastEqual=false;
+            }
 
 
         }
@@ -251,9 +300,18 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener mult = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            operation=tvOperation.getText().toString();
-            operation=operation + "*";
-            tvOperation.setText(operation);
+            if(!tvOperation.getText().toString().equals("")&&
+                    !tvOperation.getText().toString().substring(tvOperation.getText().toString().length()-1, tvOperation.getText().toString().length()).equals("*")) {
+                if(isLastEqual)
+                    operation = tvResult.getText().toString();
+                else
+                    operation = tvOperation.getText().toString();
+
+                cutLast();
+                operation = operation + "*";
+                tvOperation.setText(operation);
+                isLastEqual=false;
+            }
 
 
         }
@@ -261,9 +319,19 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener divide = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            operation=tvOperation.getText().toString();
-            operation=operation + "/";
-            tvOperation.setText(operation);
+            if(!tvOperation.getText().toString().equals("")&&
+                    !tvOperation.getText().toString().substring(tvOperation.getText().toString().length()-1, tvOperation.getText().toString().length()).equals("/")) {
+                if(isLastEqual)
+                    operation = tvResult.getText().toString();
+
+                else
+                    operation = tvOperation.getText().toString();
+
+                cutLast();
+                operation = operation + "/";
+                tvOperation.setText(operation);
+                isLastEqual=false;
+            }
 
 
         }
@@ -271,42 +339,42 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener sqrt = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(!tvResult.getText().toString().equals("")){
-                operation=tvResult.getText().toString();
-                Double sq=Math.sqrt(Double.parseDouble(operation));
-                operation = sq.toString();
-                if(operation.substring(operation.length()-2, operation.length()).equals(".0"))
-                    operation=operation.substring(0,operation.length()-2);
-                tvResult.setText(operation);
-                tvOperation.setText(operation);
+            if(!tvOperation.getText().toString().equals("")) {
 
-            }
-            else{
-                operation=tvOperation.getText().toString();
-                if(isLastOperator(operation))
-                    operation=operation.substring(0, operation.length()-1);
-                try {
-                    result = res.Parse(operation);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (!tvResult.getText().toString().equals("")) {
+                    operation = tvResult.getText().toString();
+                    Double sq = Math.sqrt(Double.parseDouble(operation));
+                    operation = sq.toString();
+                    if (operation.substring(operation.length() - 2, operation.length()).equals(".0"))
+                        operation = operation.substring(0, operation.length() - 2);
+                    tvResult.setText(operation);
+                    tvOperation.setText(operation);
+                } else {
+                    operation = tvOperation.getText().toString();
+                    cutLast();
+                    try {
+                        result = res.Parse(operation);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    operation = result.toString();
+                    Double sq = Math.sqrt(Double.parseDouble(operation));
+                    operation = sq.toString();
+                    if (operation.substring(operation.length() - 2, operation.length()).equals(".0"))
+                        operation = operation.substring(0, operation.length() - 2);
+                    tvResult.setText(operation);
+                    tvOperation.setText(operation);
+                    tvOperation.setText(operation);
+
                 }
-
-                operation=result.toString();
-                Double sq=Math.sqrt(Double.parseDouble(operation));
-                operation = sq.toString();
-                if(operation.substring(operation.length()-2, operation.length()).equals(".0"))
-                    operation=operation.substring(0,operation.length()-2);
-                tvResult.setText(operation);
-                tvOperation.setText(operation);
-                tvOperation.setText(operation);
-
             }
 
 
 
         }
     };
-    public boolean isLastOperator(String s){
+    public static boolean isLastOperator(String s){
        switch(s.substring(s.length()-1, s.length())){
            case "%":
                return true;
@@ -323,6 +391,12 @@ public class MainActivity extends AppCompatActivity {
 
        }
     }
+    public void cutLast (){
+        if (isLastOperator(operation))
+            operation = operation.substring(0, operation.length() - 1);
+    }
+
+
 
 
 }
