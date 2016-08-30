@@ -32,7 +32,9 @@
                 app:layout_columnWeight="0"
                 android:layout_weight="1"
                 android:id="@+id/oper"
-                android:gravity="right" />
+                android:gravity="right"
+                android:textAppearance="@android:style/TextAppearance.Material.Large"
+                android:textSize="30sp" />
 
         </LinearLayout>
 
@@ -48,7 +50,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/result"
                 android:layout_weight="1"
-                android:gravity="right" />
+                android:gravity="right"
+                android:textAppearance="@android:style/TextAppearance.Material.Large"
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -65,7 +69,9 @@
 
                 app:layout_columnWeight="1"
                 app:layout_rowWeight="1"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="+/-"
@@ -75,19 +81,23 @@
 
                 app:layout_columnWeight="1"
                 app:layout_rowWeight="1"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
-                android:text="%"
+                android:text="√"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/btPirc"
+                android:id="@+id/btSqrt"
 
                 app:layout_columnWeight="1"
                 app:layout_rowWeight="1"
                 android:layout_row="0"
                 android:layout_column="2"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="DEL"
@@ -99,7 +109,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="0"
                 android:layout_column="3"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -118,7 +130,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="1"
                 android:layout_column="0"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="8"
@@ -130,7 +144,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="1"
                 android:layout_column="1"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="9"
@@ -142,7 +158,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="1"
                 android:layout_column="2"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="÷"
@@ -154,7 +172,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="1"
                 android:layout_column="3"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -173,7 +193,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="2"
                 android:layout_column="0"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="5"
@@ -185,7 +207,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="2"
                 android:layout_column="1"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="6"
@@ -197,7 +221,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="2"
                 android:layout_column="2"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="×"
@@ -209,7 +235,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="2"
                 android:layout_column="3"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
         </LinearLayout>
 
@@ -229,7 +257,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="3"
                 android:layout_column="0"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="2"
@@ -241,7 +271,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="3"
                 android:layout_column="1"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="3"
@@ -253,7 +285,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="3"
                 android:layout_column="2"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="-"
@@ -265,7 +299,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="3"
                 android:layout_column="3"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -284,7 +320,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="4"
                 android:layout_column="0"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text=","
@@ -296,7 +334,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="4"
                 android:layout_column="1"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="="
@@ -308,7 +348,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="4"
                 android:layout_column="2"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
             <Button
                 android:text="+"
@@ -320,7 +362,9 @@
                 app:layout_rowWeight="1"
                 android:layout_row="4"
                 android:layout_column="3"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="30sp" />
 
         </LinearLayout>
 

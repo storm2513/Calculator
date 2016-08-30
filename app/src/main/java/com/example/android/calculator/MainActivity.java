@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-    Button bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, bt9, bt0, btMult, btMin, btC, btDiv, btPirc, btPM, btDel, btPlus, btDot, btEq;
+    Button bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, bt9, bt0, btMult, btMin, btC, btDiv, btSqrt, btPM, btDel, btPlus, btDot, btEq;
     TextView tvOperation, tvResult;
-    static Integer result;
+    static Double result;
     static String operation = "";
 
     Expressions res = new Expressions();
@@ -35,7 +34,7 @@ public class MainActivity extends Activity {
         btMin = (Button) findViewById(R.id.btMin);
         btC = (Button) findViewById(R.id.btC);
         btDiv = (Button) findViewById(R.id.btDiv);
-        btPirc = (Button) findViewById(R.id.btPirc);
+        btSqrt = (Button) findViewById(R.id.btSqrt);
         btPM = (Button) findViewById(R.id.btPM);
         btDel = (Button) findViewById(R.id.btDel);
         btPlus = (Button) findViewById(R.id.btPlus);
@@ -78,8 +77,52 @@ public class MainActivity extends Activity {
         });
 
         btDiv.setOnClickListener(divide);
-        btPM.setOnClickListener(just); //TODO make smth
-        btPirc.setOnClickListener(pircent);
+        btPM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!tvResult.getText().toString().equals("")){
+                operation=tvResult.getText().toString();
+                if(!operation.substring(0,1).equalsIgnoreCase("-")) {
+                    operation = "-" + operation;
+                    tvOperation.setText(operation);
+                    tvResult.setText(operation);
+                }
+                else
+                {
+                    operation=operation.substring(1,operation.length());
+                    tvOperation.setText(operation);
+                    tvResult.setText(operation);
+                }}
+                else{
+                    operation=tvOperation.getText().toString();
+                    if(isLastOperator(operation))
+                        operation=operation.substring(0, operation.length()-1);
+                    try {
+                        result = res.Parse(operation);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    operation=result.toString();
+                    if(operation.substring(operation.length()-2, operation.length()).equals(".0"))
+                        operation=operation.substring(0,operation.length()-2);
+                    if(!operation.substring(0,1).equalsIgnoreCase("-")) {
+                        operation = "-" + operation;
+                        tvOperation.setText(operation);
+                        tvResult.setText(operation);
+                    }
+                    else
+                    {
+                        operation=operation.substring(1,operation.length());
+                        tvOperation.setText(operation);
+                        tvResult.setText(operation);
+                    }}
+
+                }
+
+
+        });
+        btSqrt.setOnClickListener(sqrt);
 
         btC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,20 +190,20 @@ public class MainActivity extends Activity {
                     break;
 
                 case R.id.btDot:
-                    operation += ".";
-                    tvOperation.setText(operation);
+                    if(tvOperation.getText().toString().equals("")){
+                        tvOperation.setText("0.");
+                        operation=tvOperation.getText().toString();
+                    }
+                    if(!tvOperation.getText().toString().substring(tvOperation.getText().toString().length()-1, tvOperation.getText().toString().length()).equals(".")) {
+                        operation += ".";
+                        tvOperation.setText(operation);
+                    }
                     break;
 
             }
         }
     };
-    View.OnClickListener just = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(getApplicationContext(), "Works", Toast.LENGTH_SHORT).show();
 
-        }
-    };
 
     View.OnClickListener equal = new View.OnClickListener() {
         @Override
@@ -168,9 +211,19 @@ public class MainActivity extends Activity {
             operation=tvOperation.getText().toString();
             if(isLastOperator(operation))
                 operation=operation.substring(0, operation.length()-1);
-            result = res.eval(operation);
-            tvResult.setText(result.toString());
-            operation="";
+            try {
+                result = res.Parse(operation);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+            operation=result.toString();
+
+            if(operation.substring(operation.length()-2, operation.length()).equals(".0"))
+                operation=operation.substring(0,operation.length()-2);
+
+            tvResult.setText(operation);
+
 
         }
     };
@@ -214,12 +267,40 @@ public class MainActivity extends Activity {
 
         }
     };
-    View.OnClickListener pircent = new View.OnClickListener() {
+    View.OnClickListener sqrt = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            operation=tvOperation.getText().toString();
-            operation=operation + "%";
-            tvOperation.setText(operation);
+            if(!tvResult.getText().toString().equals("")){
+                operation=tvResult.getText().toString();
+                Double sq=Math.sqrt(Double.parseDouble(operation));
+                operation = sq.toString();
+                if(operation.substring(operation.length()-2, operation.length()).equals(".0"))
+                    operation=operation.substring(0,operation.length()-2);
+                tvResult.setText(operation);
+                tvOperation.setText(operation);
+
+            }
+            else{
+                operation=tvOperation.getText().toString();
+                if(isLastOperator(operation))
+                    operation=operation.substring(0, operation.length()-1);
+                try {
+                    result = res.Parse(operation);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                operation=result.toString();
+                Double sq=Math.sqrt(Double.parseDouble(operation));
+                operation = sq.toString();
+                if(operation.substring(operation.length()-2, operation.length()).equals(".0"))
+                    operation=operation.substring(0,operation.length()-2);
+                tvResult.setText(operation);
+                tvOperation.setText(operation);
+                tvOperation.setText(operation);
+
+            }
+
 
 
         }
@@ -242,5 +323,7 @@ public class MainActivity extends Activity {
        }
     }
 
+
 }
+
 
