@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     static Double result;
     static String operation = "";
     static boolean isLastEqual = false;
+    static boolean hasDot = false;
 
 
     Expressions res = new Expressions();
@@ -65,8 +66,11 @@ public class MainActivity extends AppCompatActivity {
         btDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(operation.length()!=0)
-                operation = operation.substring(0, operation.length() - 1);
+                if(operation.length()!=0) {
+                    if (operation.substring(operation.length() - 1, operation.length()).equals("."))
+                        hasDot = false;
+                    operation = operation.substring(0, operation.length() - 1);
+                }
                 tvOperation.setText(operation);
                 isLastEqual=false;
             }
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 operation = "";
                 tvOperation.setText("");
                 isLastEqual=false;
+                hasDot=false;
                 return true;
             }
         });
@@ -88,12 +93,17 @@ public class MainActivity extends AppCompatActivity {
                 if (!tvOperation.getText().toString().equals("")) {
                     if (!tvResult.getText().toString().equals("")) {
                         operation = tvResult.getText().toString();
+
                         if (!operation.substring(0, 1).equalsIgnoreCase("-")) {
                             operation = "-" + operation;
+                            if(operation.substring(operation.length() - 1, operation.length()).equals("."))
+                                hasDot=false;
                             tvOperation.setText(operation);
                             tvResult.setText(operation);
                         } else {
                             operation = operation.substring(1, operation.length());
+                            if(operation.substring(operation.length() - 1, operation.length()).equals("."))
+                                hasDot=false;
                             tvOperation.setText(operation);
                             tvResult.setText(operation);
                         }
@@ -101,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
                         operation = tvOperation.getText().toString();
                         if (isLastOperator(operation))
                             operation = operation.substring(0, operation.length() - 1);
+                        if(operation.substring(operation.length() - 1, operation.length()).equals("."))
+                            hasDot=false;
                         try {
                             result = res.Parse(operation);
                         } catch (Exception e) {
@@ -134,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     operation = "";
                     tvOperation.setText("");
                     tvResult.setText("");
+                hasDot=false;
 
             }
         });
@@ -222,19 +235,23 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.btDot:
-                    if(isLastEqual)
-                        operation="";
-                    if(tvOperation.getText().toString().equals("")){
-                        tvOperation.setText("0.");
-                        operation=tvOperation.getText().toString();
-                    }
-                    if(!tvOperation.getText().toString().substring(tvOperation.getText().toString().length()-1, tvOperation.getText().toString().length()).equals(".")) {
-                        operation += ".";
-                        tvOperation.setText(operation);
-                    }
-                    isLastEqual=false;
-                    break;
+                    if(!hasDot&&!isLastOperator(tvOperation.getText().toString())) {
+                        if (isLastEqual)
+                            operation = "";
+                        if (tvOperation.getText().toString().equals("")||operation.equals("")) {
+                            tvOperation.setText("0.");
+                            operation = tvOperation.getText().toString();
+                            hasDot=true;
+                        }
+                        if (!tvOperation.getText().toString().substring(tvOperation.getText().toString().length() - 1, tvOperation.getText().toString().length()).equals(".")) {
+                            operation += ".";
+                            tvOperation.setText(operation);
+                            hasDot=true;
+                        }
+                        isLastEqual = false;
+                        break;
 
+                    }
             }
         }
     };
@@ -259,6 +276,7 @@ public class MainActivity extends AppCompatActivity {
 
                 tvResult.setText(operation);
                 isLastEqual=true;
+                hasDot=false;
             }
 
 
@@ -277,6 +295,7 @@ public class MainActivity extends AppCompatActivity {
                 operation = operation + "+";
                 tvOperation.setText(operation);
                 isLastEqual=false;
+                hasDot=false;
             }
 
 
@@ -292,12 +311,14 @@ public class MainActivity extends AppCompatActivity {
                         operation = operation + "-";
                         tvOperation.setText(operation);
                         isLastEqual = false;
+                        hasDot=false;
                     }
                     else {
                         operation = tvOperation.getText().toString();
                         operation = operation + "-";
                         tvOperation.setText(operation);
                         isLastEqual = false;
+                        hasDot=false;
                     }
 
                 }}
@@ -328,6 +349,7 @@ public class MainActivity extends AppCompatActivity {
                 operation = operation + "*";
                 tvOperation.setText(operation);
                 isLastEqual=false;
+                hasDot=false;
             }
 
 
@@ -348,6 +370,7 @@ public class MainActivity extends AppCompatActivity {
                 operation = operation + "/";
                 tvOperation.setText(operation);
                 isLastEqual=false;
+                hasDot=false;
             }
 
 
