@@ -253,7 +253,14 @@ public class MainActivity extends AppCompatActivity {
                         isLastEqual = false;
                         break;
 
-                    }}
+                    }
+                            else{
+                            operation=operation+("0.");
+                            tvOperation.setText(operation);
+                            hasDot=true;
+                        }
+
+                        }
                         else {
                             if (isLastEqual)
                                 operation = "";
