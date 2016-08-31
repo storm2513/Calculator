@@ -235,7 +235,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.btDot:
-                    if(!hasDot&&!isLastOperator(tvOperation.getText().toString())) {
+                    if(!hasDot) {
+                        if(!tvOperation.getText().toString().equals("")){
+                        if(!isLastOperator(tvOperation.getText().toString())){
                         if (isLastEqual)
                             operation = "";
                         if (tvOperation.getText().toString().equals("")||operation.equals("")) {
@@ -251,6 +253,23 @@ public class MainActivity extends AppCompatActivity {
                         isLastEqual = false;
                         break;
 
+                    }}
+                        else {
+                            if (isLastEqual)
+                                operation = "";
+                            if (tvOperation.getText().toString().equals("")||operation.equals("")) {
+                                tvOperation.setText("0.");
+                                operation = tvOperation.getText().toString();
+                                hasDot=true;
+                            }
+                            if (!tvOperation.getText().toString().substring(tvOperation.getText().toString().length() - 1, tvOperation.getText().toString().length()).equals(".")) {
+                                operation += ".";
+                                tvOperation.setText(operation);
+                                hasDot=true;
+                            }
+                            isLastEqual = false;
+                            break;
+                        }
                     }
             }
         }
